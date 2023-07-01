@@ -1,19 +1,15 @@
 <template>
-  <div class="house-container">
-    <h1>Household carbon footprint calculator</h1>
-    <div
-      class="electricity-section"
-      v-for="(item, index) in items"
-      :key="index"
-    >
-      <label class="electricity-label"> {{ item.label }}: </label>
+  <div class="transport-container">
+    <h1>Public transport carbon footprint calculator</h1>
+    <div class="transport-section" v-for="(item, index) in items" :key="index">
+      <label class="transport-label"> {{ item.label }}: </label>
       <input
         v-model.number="item.value"
         type="number"
-        class="electricity-input"
+        class="transport-input"
       />
     </div>
-    <button @click="calculateCO2Footprint" class="household-calculate-button">
+    <button @click="calculateCO2Footprint" class="transport-calculate-button">
       Calculate
     </button>
     <div v-if="co2Footprint !== null">
@@ -21,24 +17,25 @@
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 export default defineComponent({
-  name: "Co2HouseFootprintCalculator",
+  name: "Co2TransportFootprintCalculator",
   setup() {
     const items = ref([
       {
-        label: "Electricity Used (in kWh)",
+        label: "Bus (in km)",
         value: null,
         co2PerUnit: 0.375,
       },
       {
-        label: "Coal Burned (in kg)",
+        label: "Subway (in km)",
         value: null,
         co2PerUnit: 2.5,
       },
       {
-        label: "Wood Burned (in kg)",
+        label: "Taxi (in km)",
         value: null,
         co2PerUnit: 1.8,
       },
@@ -63,14 +60,14 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.house-container {
+.transport-container {
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
 }
-.electricity-section {
+.transport-section {
   padding: 14px;
   display: flex;
   gap: 30px;
@@ -78,15 +75,15 @@ export default defineComponent({
   justify-content: center;
   width: 50%;
 }
-.electricity-label {
+.transport-label {
   text-align: right;
   width: 200px;
 }
-.electricity-input {
+.transport-input {
   width: 200px;
   height: 30px;
 }
-.household-calculate-button {
+.transport-calculate-button {
   width: 200px;
   height: 45px;
   margin-top: 10px;
@@ -95,7 +92,7 @@ export default defineComponent({
   border-radius: 10px;
   cursor: pointer;
 }
-.household-calculate-button:hover {
+.transport-calculate-button:hover {
   background-color: #535bf2;
   transition: 0.5s ease-in-out;
 }

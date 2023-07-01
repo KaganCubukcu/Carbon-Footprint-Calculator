@@ -1,8 +1,8 @@
 <template>
   <div class="navbar-container">
     <li></li>
-    <li>Carbon Footprint Calculator</li>
-    <li>Buraya Linkedin ve github gelecek</li>
+    <h2>Carbon Footprint Calculator</h2>
+    <li></li>
   </div>
 </template>
 
@@ -11,8 +11,9 @@
 <style scoped>
 .navbar-container {
   display: flex;
-  background-color: red;
   justify-content: center;
   list-style-type: none;
+  height: 3rem;
+  align-items: center;
 }
 </style>
