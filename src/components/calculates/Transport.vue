@@ -1,6 +1,6 @@
 <template>
   <div class="transport-container">
-    <h1>Public transport carbon footprint calculator</h1>
+    <h1>Public Transport Carbon Footprint Calculator</h1>
     <div class="transport-section" v-for="(item, index) in items" :key="index">
       <label class="transport-label"> {{ item.label }}: </label>
       <input
@@ -12,47 +12,57 @@
     <button @click="calculateCO2Footprint" class="transport-calculate-button">
       Calculate
     </button>
-    <div v-if="co2Footprint !== null">
-      <h2>Your carbon footprint is: {{ co2Footprint }} kg</h2>
+    <div v-if="co2TransportFootprint !== null">
+      <h2>
+        Your carbon footprint is: {{ co2TransportFootprint }} tonnes of CO2e
+      </h2>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { useStore } from "vuex";
+
 export default defineComponent({
   name: "Co2TransportFootprintCalculator",
   setup() {
+    const store = useStore();
     const items = ref([
       {
         label: "Bus (in km)",
         value: null,
-        co2PerUnit: 0.375,
+        co2PerUnit: 0.00013,
       },
       {
         label: "Subway (in km)",
         value: null,
-        co2PerUnit: 2.5,
+        co2PerUnit: 0.000034,
       },
       {
         label: "Taxi (in km)",
         value: null,
-        co2PerUnit: 1.8,
+        co2PerUnit: 0.00015,
       },
     ]);
 
-    const co2Footprint = ref<number | null>(null);
+    const co2TransportFootprint = ref<number | null>(null);
 
     function calculateCO2Footprint() {
       let totalCO2 = 0;
       for (const item of items.value) {
         totalCO2 += (item.value || 0) * item.co2PerUnit;
       }
-      co2Footprint.value = totalCO2;
+
+      const roundedCO2 = totalCO2.toFixed(2);
+
+      co2TransportFootprint.value = Number(roundedCO2);
+      store.dispatch("updateCo2TransportFootprint", Number(roundedCO2));
     }
+
     return {
       items,
-      co2Footprint,
+      co2TransportFootprint,
       calculateCO2Footprint,
     };
   },
@@ -95,5 +105,16 @@ export default defineComponent({
 .transport-calculate-button:hover {
   background-color: #535bf2;
   transition: 0.5s ease-in-out;
+}
+@media only screen and (max-width: 600px) {
+  h1 {
+    font-size: 24px;
+  }
+  .transport-section {
+    width: 100%;
+  }
+  .transport-label {
+    text-align: center;
+  }
 }
 </style>

@@ -19,18 +19,21 @@
     <button @click="calculateVehicleFootprint" class="vehicle-calculate-button">
       Calculate
     </button>
-    <div v-if="co2Footprint !== null">
-      <h2>Your Carbon footprint is: {{ co2Footprint }} kg</h2>
+    <div v-if="co2VehicleFootprint !== null">
+      <h2>
+        Your Carbon footprint is: {{ co2VehicleFootprint }} tonnes of CO2e
+      </h2>
     </div>
   </div>
 </template>
-
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "Co2VehicleFootprintCalculator",
   setup() {
+    const store = useStore();
     const items = ref([
       {
         label: "Vehicle Type",
@@ -44,30 +47,47 @@ export default defineComponent({
       },
     ]);
     const mileage = ref<number | null>(null);
-    const co2Footprint = ref<number | null>(null);
+    const co2VehicleFootprint = ref<number | null>(null);
 
     function calculateVehicleFootprint() {
-      let mileageVal = mileage.value || 0;
-      let co2OperUnit = 0;
+      const mileageVal = mileage.value || 0;
+      let co2perUnit = 0;
+      let co2perKm = 0;
 
       switch (items.value[1].value) {
         case "Diesel":
-          co2OperUnit = 2.7;
+          co2perUnit = 0.00268;
           break;
         case "LPG":
-          co2OperUnit = 1.5;
+          co2perUnit = 0.00151;
           break;
         case "Petrol":
-          co2OperUnit = 2.9;
+          co2perUnit = 0.00231;
           break;
       }
-      co2Footprint.value = mileageVal * co2OperUnit;
+
+      switch (items.value[0].value) {
+        case "Van":
+          co2perKm = 0.25;
+          break;
+        case "Motorcycle":
+          co2perKm = 0.083;
+          break;
+        case "Car":
+          co2perKm = 0.111;
+          break;
+      }
+
+      const co2Footprint = (mileageVal * co2perUnit * co2perKm).toFixed(2);
+
+      co2VehicleFootprint.value = Number(co2Footprint);
+      store.dispatch("updateCo2VehicleFootprint", Number(co2Footprint));
     }
 
     return {
       items,
       mileage,
-      co2Footprint,
+      co2VehicleFootprint,
       calculateVehicleFootprint,
     };
   },
@@ -126,5 +146,10 @@ export default defineComponent({
   display: flex;
   padding: 14px;
   align-items: center;
+}
+@media only screen and (max-width: 600px) {
+  h1 {
+    font-size: 24px;
+  }
 }
 </style>

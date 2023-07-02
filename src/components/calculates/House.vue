@@ -1,62 +1,62 @@
 <template>
   <div class="house-container">
-    <h1>Household carbon footprint calculator</h1>
-    <div
-      class="electricity-section"
-      v-for="(item, index) in items"
-      :key="index"
-    >
-      <label class="electricity-label"> {{ item.label }}: </label>
-      <input
-        v-model.number="item.value"
-        type="number"
-        class="electricity-input"
-      />
+    <h1>Household Carbon Footprint Calculator</h1>
+    <div class="house-section" v-for="(item, index) in items" :key="index">
+      <label class="house-label"> {{ item.label }}: </label>
+      <input v-model.number="item.value" type="number" class="house-input" />
     </div>
-    <button @click="calculateCO2Footprint" class="household-calculate-button">
+    <button @click="calculateCO2HouseFootprint" class="house-calculate-button">
       Calculate
     </button>
-    <div v-if="co2Footprint !== null">
-      <h2>Your carbon footprint is: {{ co2Footprint }} kg</h2>
+    <div v-if="co2HouseFootprint !== null">
+      <h2>Your carbon footprint is: {{ co2HouseFootprint }} tonnes of CO2e</h2>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { useStore } from "vuex";
+
 export default defineComponent({
   name: "Co2HouseFootprintCalculator",
   setup() {
+    const store = useStore();
     const items = ref([
       {
         label: "Electricity Used (in kWh)",
         value: null,
-        co2PerUnit: 0.375,
+        co2PerUnit: 0.000375,
       },
       {
-        label: "Coal Burned (in kg)",
+        label: "Coal Burned (in tons)",
         value: null,
-        co2PerUnit: 2.5,
+        co2PerUnit: 2.88,
       },
       {
-        label: "Wood Burned (in kg)",
+        label: "Wood Burned (in tons)",
         value: null,
-        co2PerUnit: 1.8,
+        co2PerUnit: 0.05,
       },
     ]);
 
-    const co2Footprint = ref<number | null>(null);
+    const co2HouseFootprint = ref<number | null>(null);
 
-    function calculateCO2Footprint() {
-      let totalCO2 = 0;
-      for (const item of items.value) {
-        totalCO2 += (item.value || 0) * item.co2PerUnit;
-      }
-      co2Footprint.value = totalCO2;
+    function calculateCO2HouseFootprint() {
+      const totalCO2 = items.value.reduce((acc, item) => {
+        const co2 = (item.value || 0) * item.co2PerUnit;
+        return acc + co2;
+      }, 0);
+
+      const roundedCO2 = Number(totalCO2.toFixed(2));
+
+      co2HouseFootprint.value = roundedCO2;
+      store.dispatch("updateCo2HouseFootprint", roundedCO2);
     }
+
     return {
       items,
-      co2Footprint,
-      calculateCO2Footprint,
+      co2HouseFootprint,
+      calculateCO2HouseFootprint,
     };
   },
 });
@@ -70,7 +70,7 @@ export default defineComponent({
   align-items: center;
   margin-top: 10px;
 }
-.electricity-section {
+.house-section {
   padding: 14px;
   display: flex;
   gap: 30px;
@@ -78,15 +78,15 @@ export default defineComponent({
   justify-content: center;
   width: 50%;
 }
-.electricity-label {
+.house-label {
   text-align: right;
   width: 200px;
 }
-.electricity-input {
+.house-input {
   width: 200px;
   height: 30px;
 }
-.household-calculate-button {
+.house-calculate-button {
   width: 200px;
   height: 45px;
   margin-top: 10px;
@@ -95,8 +95,16 @@ export default defineComponent({
   border-radius: 10px;
   cursor: pointer;
 }
-.household-calculate-button:hover {
+.house-calculate-button:hover {
   background-color: #535bf2;
   transition: 0.5s ease-in-out;
+}
+@media only screen and (max-width: 600px) {
+  .house-section {
+    width: 100%;
+  }
+  h1 {
+    font-size: 24px;
+  }
 }
 </style>
