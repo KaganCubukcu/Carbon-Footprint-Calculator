@@ -1,15 +1,15 @@
 <template>
-  <div class="transport-container">
+  <div class="calculator-container">
     <h1>Public Transport Carbon Footprint Calculator</h1>
-    <div class="transport-section" v-for="(item, index) in items" :key="index">
-      <label class="transport-label"> {{ item.label }}: </label>
+    <div class="calculator-section" v-for="(item, index) in items" :key="index">
+      <label class="calculator-label"> {{ item.label }}: </label>
       <input
         v-model.number="item.value"
         type="number"
-        class="transport-input"
+        class="calculator-input"
       />
     </div>
-    <button @click="calculateCO2Footprint" class="transport-calculate-button">
+    <button @click="calculateCO2Footprint" class="calculator-button">
       Calculate
     </button>
     <div v-if="co2TransportFootprint !== null">
@@ -70,50 +70,14 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.transport-container {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
-}
-.transport-section {
-  padding: 14px;
-  display: flex;
-  gap: 30px;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-}
-.transport-label {
-  text-align: right;
-  width: 200px;
-}
-.transport-input {
-  width: 200px;
-  height: 30px;
-}
-.transport-calculate-button {
-  width: 200px;
-  height: 45px;
-  margin-top: 10px;
-  background-color: #646cff;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-.transport-calculate-button:hover {
-  background-color: #535bf2;
-  transition: 0.5s ease-in-out;
-}
 @media only screen and (max-width: 600px) {
   h1 {
     font-size: 24px;
   }
-  .transport-section {
+  .calculator-section {
     width: 100%;
   }
-  .transport-label {
+  .calculator-label {
     text-align: center;
   }
 }

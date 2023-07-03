@@ -1,5 +1,5 @@
 <template>
-  <div class="vehicle-container">
+  <div class="calculator-container">
     <h1>Vehicle Carbon Footprint Calculator</h1>
     <div class="vehicle-section-container">
       <div class="vehicle-section" v-for="(item, index) in items" :key="index">
@@ -16,7 +16,7 @@
         <input v-model.number="mileage" type="number" class="vehicle-input" />
       </div>
     </div>
-    <button @click="calculateVehicleFootprint" class="vehicle-calculate-button">
+    <button @click="calculateVehicleFootprint" class="vcalculator-button">
       Calculate
     </button>
     <div v-if="co2VehicleFootprint !== null">
@@ -95,13 +95,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.vehicle-container {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
-}
 .vehicle-section-container {
   padding: 14px;
   display: flex;
@@ -124,19 +117,6 @@ export default defineComponent({
   width: 200px;
   height: 30px;
   margin-left: 30px;
-}
-.vehicle-calculate-button {
-  width: 200px;
-  height: 45px;
-  margin-top: 10px;
-  background-color: #646cff;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-.vehicle-calculate-button:hover {
-  background-color: #535bf2;
-  transition: 0.5s ease-in-out;
 }
 .vehicle-select {
   width: 200px;

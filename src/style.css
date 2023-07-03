@@ -13,3 +13,39 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+.calculator-container {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+.calculator-section {
+  padding: 14px;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+}
+.calculator-label {
+  text-align: right;
+  width: 200px;
+}
+.calculator-input {
+  width: 200px;
+  height: 30px;
+}
+.calculator-button {
+  width: 200px;
+  height: 45px;
+  margin-top: 10px;
+  background-color: #646cff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.calculator-button:hover {
+  background-color: #535bf2;
+  transition: 0.5s ease-in-out;
+}

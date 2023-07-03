@@ -1,11 +1,15 @@
 <template>
-  <div class="house-container">
+  <div class="calculator-container">
     <h1>Household Carbon Footprint Calculator</h1>
-    <div class="house-section" v-for="(item, index) in items" :key="index">
-      <label class="house-label"> {{ item.label }}: </label>
-      <input v-model.number="item.value" type="number" class="house-input" />
+    <div class="calculator-section" v-for="(item, index) in items" :key="index">
+      <label class="calculator-label"> {{ item.label }}: </label>
+      <input
+        v-model.number="item.value"
+        type="number"
+        class="calculator-input"
+      />
     </div>
-    <button @click="calculateCO2HouseFootprint" class="house-calculate-button">
+    <button @click="calculateCO2HouseFootprint" class="calculator-button">
       Calculate
     </button>
     <div v-if="co2HouseFootprint !== null">
@@ -63,44 +67,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.house-container {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
-}
-.house-section {
-  padding: 14px;
-  display: flex;
-  gap: 30px;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-}
-.house-label {
-  text-align: right;
-  width: 200px;
-}
-.house-input {
-  width: 200px;
-  height: 30px;
-}
-.house-calculate-button {
-  width: 200px;
-  height: 45px;
-  margin-top: 10px;
-  background-color: #646cff;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-.house-calculate-button:hover {
-  background-color: #535bf2;
-  transition: 0.5s ease-in-out;
-}
 @media only screen and (max-width: 600px) {
-  .house-section {
+  .calculate-section {
     width: 100%;
   }
   h1 {

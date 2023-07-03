@@ -1,5 +1,6 @@
 import { Commit } from "vuex";
 
+// Define the state interface
 export interface State {
   results: number | null;
   co2HouseFootprint: number | null;
@@ -7,6 +8,7 @@ export interface State {
   co2VehicleFootprint: number | null;
 }
 
+// Define the mutations interface
 export interface Mutations {
   updateResults(state: State): void;
   setCo2HouseFootprint(state: State, co2HouseFootprint: number | null): void;
@@ -20,11 +22,13 @@ export interface Mutations {
   ): void;
 }
 
+// Define the actions interface
 export interface ActionContext {
   commit: Commit;
   state: State;
 }
 
+// Define the actions type
 export type Actions = {
   updateResults(context: ActionContext, results: any[]): void;
   updateCo2HouseFootprint(
