@@ -12,4 +12,4 @@ To set up the project, follow these steps:
 
 ## Usage
 
-The project helps users calculate their carbon footprint based on their house, transport, and vehicle usage. Users can enter their activities in these categories to calculate their carbon footprint. The total score can be viewed in the results tab. This allows users to see the impact of their daily activities on the environment and make more informed decisions to reduce their carbon footprint.
+The project helps users calculate their carbon footprint based on their house, transport, and vehicle usage. Users can enter their activities in these categories to calculate their carbon footprint. The total carbon footprint can be viewed in the results tab. This allows users to see the impact of their daily activities on the environment and make more informed decisions to reduce their carbon footprint.
