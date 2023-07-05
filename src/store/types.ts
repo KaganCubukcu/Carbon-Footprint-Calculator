@@ -30,7 +30,7 @@ export interface ActionContext {
 
 // Define the actions type
 export type Actions = {
-  updateResults(context: ActionContext, results: any[]): void;
+  updateResults(context: ActionContext, results: number): void;
   updateCo2HouseFootprint(
     context: ActionContext,
     co2Footprint: number | null
